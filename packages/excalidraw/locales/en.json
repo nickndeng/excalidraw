@@ -165,7 +165,55 @@
     "unCroppedDimension": "Uncropped dimension",
     "copyElementLink": "Copy link to object",
     "linkToElement": "Link to object",
-    "wrapSelectionInFrame": "Wrap selection in frame"
+    "wrapSelectionInFrame": "Wrap selection in frame",
+    "a11y": {
+      "mirrorLabel": "Drawing elements",
+      "liveRegionLabel": "Drawing announcements",
+      "element": {
+        "rectangle": "Rectangle",
+        "diamond": "Diamond",
+        "ellipse": "Ellipse",
+        "text": "Text",
+        "line": "Line",
+        "arrow": "Arrow",
+        "freedraw": "Freehand drawing",
+        "image": "Image",
+        "frame": "Frame",
+        "magicframe": "Magic frame",
+        "iframe": "Embedded page",
+        "embeddable": "Embedded content",
+        "selection": "Selection rectangle"
+      },
+      "nodeLabel": {
+        "plain": "{{type}}, {{position}}",
+        "withText": "{{type}} \"{{text}}\", {{position}}",
+        "editingSuffix": "{{label}} (editing)"
+      },
+      "position": {
+        "topLeft": "top-left of canvas",
+        "top": "top of canvas",
+        "topRight": "top-right of canvas",
+        "left": "left of canvas",
+        "center": "center of canvas",
+        "right": "right of canvas",
+        "bottomLeft": "bottom-left of canvas",
+        "bottom": "bottom of canvas",
+        "bottomRight": "bottom-right of canvas",
+        "insideFrame": "inside frame",
+        "insideNamedFrame": "inside frame \"{{name}}\""
+      },
+      "announce": {
+        "namedElement": "{{type}} \"{{text}}\"",
+        "selected": "{{name}} selected",
+        "deselected": "{{name}} deselected",
+        "multiSelected": "{{count}} elements selected",
+        "selectionCleared": "Selection cleared",
+        "editStart": "Editing {{name}}",
+        "editEnd": "Finished editing {{name}}",
+        "deletedOne": "Deleted 1 element",
+        "deletedMany": "Deleted {{count}} elements"
+      }
+    }
   },
   "elementLink": {
     "title": "Link to object",

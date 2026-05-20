@@ -583,6 +583,21 @@ export interface ExcalidrawProps {
   ) => JSX.Element | null;
   aiEnabled?: boolean;
   showDeprecatedFonts?: boolean;
+  /**
+   * Renders a hidden, keyboard-navigable DOM mirror of the scene for
+   * assistive technology (screen readers, keyboard-only users).
+   *
+   * The mirror is visually clipped off-screen but exposed to the
+   * accessibility tree: every scene element gets a focusable
+   * `role="treeitem"` whose accessible name is composed from element
+   * type, visible text, and a localized position descriptor. Selection,
+   * deletion, and text-edit are routed through the existing canvas
+   * actions, so the mirror never holds parallel state.
+   *
+   * Defaults to `true`. Set to `false` to disable for environments where
+   * the host application is providing its own a11y story.
+   */
+  accessibilityMirror?: boolean;
 }
 
 export type SceneData = {
@@ -645,6 +660,7 @@ export type AppProps = Merge<
     isCollaborating: boolean;
     children?: React.ReactNode;
     aiEnabled: boolean;
+    accessibilityMirror: boolean;
   }
 >;
 
@@ -680,6 +696,14 @@ export type AppClassProperties = {
   addElementsFromPasteOrLibrary: App["addElementsFromPasteOrLibrary"];
   togglePenMode: App["togglePenMode"];
   toggleLock: App["toggleLock"];
+  beginTextEditForElement: App["beginTextEditForElement"];
+  actionManager: App["actionManager"];
+  /**
+   * Public wrapper around React's setState for use by integration-point
+   * components like the accessibility mirror. Keep narrow — do not use
+   * for general state mutation.
+   */
+  setMirrorAppState: App["setMirrorAppState"];
   setActiveTool: App["setActiveTool"];
   setOpenDialog: App["setOpenDialog"];
   insertEmbeddableElement: App["insertEmbeddableElement"];

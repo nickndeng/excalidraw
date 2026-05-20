@@ -1,0 +1,55 @@
+/**
+ * Visually-hidden mirror styles.
+ *
+ * We use the "visually hidden, accessibly available" pattern from the
+ * Inclusive Components / a11y-project body of work:
+ *   - position: absolute
+ *   - width:1px / height:1px
+ *   - clip-path: inset(50%)  (visual clip)
+ *   - overflow: hidden
+ *   - white-space: nowrap
+ *
+ * Crucially NOT:
+ *   - display: none      (removes from a11y tree)
+ *   - visibility: hidden (removes from a11y tree)
+ *   - aria-hidden: true  (hides from screen readers)
+ *
+ * The container itself stays at 1×1 px, but child treeitems can still
+ * receive focus because we use clip-path rather than overflow alone.
+ *
+ * @see https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html
+ */
+
+.excalidraw-a11y-mirror {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  // clip-path is what makes it invisible visually while keeping focus
+  // rings hidden (overflow alone allows a focused outline to bleed).
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+  // Defensive: stop any descendant from accepting pointer events.
+  // Sighted users must never interact with this layer.
+  user-select: none;
+  // No font / box styling — screen readers don't care, but if a buggy
+  // browser ever revealed it, we don't want it to be a styled artifact.
+  font: inherit;
+  color: inherit;
+
+  // The live-region descendant should never be visually rendered either,
+  // but its content is announced regardless of styling.
+  > .excalidraw-a11y-live-region {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}

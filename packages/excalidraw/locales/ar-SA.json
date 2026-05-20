@@ -138,7 +138,55 @@
     "removeAllElementsFromFrame": "إزالة جميع العناصر من الإطار",
     "eyeDropper": "اختيار اللون من القماش",
     "textToDiagram": "",
-    "prompt": ""
+    "prompt": "",
+    "a11y": {
+      "mirrorLabel": "عناصر الرسم",
+      "liveRegionLabel": "إعلانات الرسم",
+      "element": {
+        "rectangle": "مستطيل",
+        "diamond": "معين",
+        "ellipse": "بيضاوي",
+        "text": "نص",
+        "line": "خط",
+        "arrow": "سهم",
+        "freedraw": "رسم حر",
+        "image": "صورة",
+        "frame": "إطار",
+        "magicframe": "إطار سحري",
+        "iframe": "صفحة مضمنة",
+        "embeddable": "محتوى مضمن",
+        "selection": "مستطيل التحديد"
+      },
+      "nodeLabel": {
+        "plain": "{{type}}، {{position}}",
+        "withText": "{{type}} «{{text}}»، {{position}}",
+        "editingSuffix": "{{label}} (تحرير)"
+      },
+      "position": {
+        "topLeft": "أعلى يسار اللوحة",
+        "top": "أعلى اللوحة",
+        "topRight": "أعلى يمين اللوحة",
+        "left": "يسار اللوحة",
+        "center": "وسط اللوحة",
+        "right": "يمين اللوحة",
+        "bottomLeft": "أسفل يسار اللوحة",
+        "bottom": "أسفل اللوحة",
+        "bottomRight": "أسفل يمين اللوحة",
+        "insideFrame": "داخل إطار",
+        "insideNamedFrame": "داخل إطار «{{name}}»"
+      },
+      "announce": {
+        "namedElement": "{{type}} «{{text}}»",
+        "selected": "{{name}} محدد",
+        "deselected": "تم إلغاء تحديد {{name}}",
+        "multiSelected": "تم تحديد {{count}} عناصر",
+        "selectionCleared": "تم مسح التحديد",
+        "editStart": "تحرير {{name}}",
+        "editEnd": "تم الانتهاء من تحرير {{name}}",
+        "deletedOne": "تم حذف عنصر واحد",
+        "deletedMany": "تم حذف {{count}} عناصر"
+      }
+    }
   },
   "library": {
     "noItems": "لا توجد عناصر أضيفت بعد...",

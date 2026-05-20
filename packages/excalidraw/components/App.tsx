@@ -397,6 +397,7 @@ import { convertToExcalidrawElements } from "../data/transform";
 import type { ValueOf } from "../utility-types";
 import { isSidebarDockedAtom } from "./Sidebar/Sidebar";
 import { StaticCanvas, InteractiveCanvas } from "./canvases";
+import { AccessibilityMirror } from "../accessibility/AccessibilityMirror";
 import { Renderer } from "../scene/Renderer";
 import { ShapeCache } from "../scene/ShapeCache";
 import { SVGLayer } from "./SVGLayer";
@@ -1725,6 +1726,13 @@ class App extends React.Component<AppProps, AppState> {
                             }}
                           />
                         )}
+                        {this.props.accessibilityMirror !== false && (
+                          <AccessibilityMirror
+                            app={this}
+                            elements={this.scene.getNonDeletedElements()}
+                            appState={this.state}
+                          />
+                        )}
                         <StaticCanvas
                           canvas={this.canvas}
                           rc={this.rc}
@@ -1820,6 +1828,47 @@ class App extends React.Component<AppProps, AppState> {
 
   public focusContainer: AppClassProperties["focusContainer"] = () => {
     this.excalidrawContainerRef.current?.focus();
+  };
+
+  /**
+   * Narrow public wrapper around `setState` for the accessibility mirror.
+   * The mirror only ever sets `selectedElementIds` / `selectedGroupIds`;
+   * keeping the surface tiny prevents drift.
+   */
+  public setMirrorAppState = (
+    next: Pick<AppState, "selectedElementIds" | "selectedGroupIds">,
+  ) => {
+    this.setState(next);
+  };
+
+  /**
+   * Begin text editing on the given element from the accessibility mirror.
+   *
+   * For text elements, opens the wysiwyg editor against the element.
+   * For valid text containers without bound text, creates a new text
+   * element at the container's center (matching the canvas Enter-key
+   * behaviour). For containers with bound text, edits the bound text.
+   *
+   * This is the single public entry point for the a11y mirror — direct
+   * field mutation of `editingTextElement` is internal.
+   */
+  public beginTextEditForElement = (element: ExcalidrawElement) => {
+    if (isTextElement(element) || isValidTextContainer(element)) {
+      let container: ExcalidrawTextContainer | undefined;
+      if (!isTextElement(element)) {
+        container = element as ExcalidrawTextContainer;
+      }
+      const midPoint = getContainerCenter(
+        element,
+        this.state,
+        this.scene.getNonDeletedElementsMap(),
+      );
+      this.startTextEditing({
+        sceneX: midPoint.x,
+        sceneY: midPoint.y,
+        container,
+      });
+    }
   };
 
   public getSceneElementsIncludingDeleted = () => {
