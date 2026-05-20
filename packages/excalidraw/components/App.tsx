@@ -435,6 +435,8 @@ import { actionTextAutoResize } from "../actions/actionTextAutoResize";
 import { getVisibleSceneBounds } from "../element/bounds";
 import { isMaybeMermaidDefinition } from "../mermaid";
 import NewElementCanvas from "./canvases/NewElementCanvas";
+import { AccessibilityMirror } from "./AccessibilityMirror/AccessibilityMirror";
+import type { AccessibilityMirrorHandle } from "./AccessibilityMirror/AccessibilityMirror";
 import {
   FlowChartCreator,
   FlowChartNavigator,
@@ -581,6 +583,9 @@ class App extends React.Component<AppProps, AppState> {
   public id: string;
   private store: Store;
   private history: History;
+  /** handle registered by the accessibility mirror so the single canvas
+   * keyboard pipeline can delegate to it (no parallel keymap) */
+  private accessibilityMirror: AccessibilityMirrorHandle | null = null;
   public excalidrawContainerValue: {
     container: HTMLDivElement | null;
     id: string;
@@ -1805,6 +1810,14 @@ class App extends React.Component<AppProps, AppState> {
                           />
                         )}
                         {this.renderFrameNames()}
+                        {this.props.accessibilityMirror !== false && (
+                          <AccessibilityMirror
+                            app={this}
+                            elements={this.scene.getNonDeletedElements()}
+                            elementsMap={allElementsMap}
+                            appState={this.state}
+                          />
+                        )}
                       </ExcalidrawActionManagerContext.Provider>
                       {this.renderEmbeddables()}
                     </ExcalidrawElementsContext.Provider>
@@ -1820,6 +1833,49 @@ class App extends React.Component<AppProps, AppState> {
 
   public focusContainer: AppClassProperties["focusContainer"] = () => {
     this.excalidrawContainerRef.current?.focus();
+  };
+
+  public registerAccessibilityMirror = (
+    handle: AccessibilityMirrorHandle,
+  ) => {
+    this.accessibilityMirror = handle;
+  };
+
+  public unregisterAccessibilityMirror = (
+    handle: AccessibilityMirrorHandle,
+  ) => {
+    if (this.accessibilityMirror === handle) {
+      this.accessibilityMirror = null;
+    }
+  };
+
+  /**
+   * Enters the canvas text editor for a text-bearing element, driven by the
+   * accessibility mirror (F2). Reuses the same `startTextEditing` path as the
+   * canvas double-click / Enter flow. Returns whether editing was started.
+   */
+  public startTextEditingViaA11y = (elementId: string): boolean => {
+    const element = this.scene.getNonDeletedElementsMap().get(elementId);
+    if (!element) {
+      return false;
+    }
+    if (!isTextElement(element) && !isValidTextContainer(element)) {
+      return false;
+    }
+    const container = !isTextElement(element)
+      ? (element as ExcalidrawTextContainer)
+      : undefined;
+    const midPoint = getContainerCenter(
+      element,
+      this.state,
+      this.scene.getNonDeletedElementsMap(),
+    );
+    this.startTextEditing({
+      sceneX: midPoint.x,
+      sceneY: midPoint.y,
+      container,
+    });
+    return true;
   };
 
   public getSceneElementsIncludingDeleted = () => {
@@ -4067,6 +4123,13 @@ class App extends React.Component<AppProps, AppState> {
               : value;
           },
         });
+      }
+
+      // delegate to the accessibility mirror first; it only consumes the event
+      // when focus is inside the mirror, otherwise normal canvas handling runs.
+      // This keeps a single keyboard pipeline with no parallel keymap.
+      if (this.accessibilityMirror?.handleKeyDown(event)) {
+        return;
       }
 
       if (!isInputLike(event.target)) {

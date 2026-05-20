@@ -583,6 +583,13 @@ export interface ExcalidrawProps {
   ) => JSX.Element | null;
   aiEnabled?: boolean;
   showDeprecatedFonts?: boolean;
+  /**
+   * Renders a hidden, screen-reader-only accessibility mirror of the canvas
+   * scene with full keyboard navigation and ARIA semantics.
+   *
+   * @default true
+   */
+  accessibilityMirror?: boolean;
 }
 
 export type SceneData = {
@@ -645,6 +652,7 @@ export type AppProps = Merge<
     isCollaborating: boolean;
     children?: React.ReactNode;
     aiEnabled: boolean;
+    accessibilityMirror: boolean;
   }
 >;
 

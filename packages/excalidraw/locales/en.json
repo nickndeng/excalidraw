@@ -629,5 +629,57 @@
     },
     "itemNotAvailable": "Command is not available...",
     "shortcutHint": "For Command palette, use {{shortcut}}"
+  },
+  "a11y": {
+    "canvas": {
+      "label": "Canvas elements",
+      "description": "Use Tab to move through elements in stacking order, arrow keys to move to the nearest element in a direction, Enter to select, Shift+Enter to add to the selection, F2 to edit text, Delete to remove, and Escape to return to the canvas."
+    },
+    "elementType": {
+      "rectangle": "Rectangle",
+      "diamond": "Diamond",
+      "ellipse": "Ellipse",
+      "text": "Text",
+      "line": "Line",
+      "arrow": "Arrow",
+      "freedraw": "Drawing",
+      "image": "Image",
+      "frame": "Frame",
+      "magicframe": "AI frame",
+      "embeddable": "Embed",
+      "iframe": "Embed",
+      "selection": "Selection",
+      "element": "Element"
+    },
+    "position": {
+      "topLeft": "top-left of canvas",
+      "top": "top of canvas",
+      "topRight": "top-right of canvas",
+      "left": "left of canvas",
+      "center": "center of canvas",
+      "right": "right of canvas",
+      "bottomLeft": "bottom-left of canvas",
+      "bottom": "bottom of canvas",
+      "bottomRight": "bottom-right of canvas",
+      "insideFrame": "inside frame {{frame}}"
+    },
+    "state": {
+      "locked": "locked",
+      "editing": "editing"
+    },
+    "name": {
+      "withText": "{{type}}: {{text}}",
+      "withPosition": "{{name}}, {{position}}",
+      "withState": "{{name}} ({{state}})"
+    },
+    "announce": {
+      "selected": "Selected {{name}}",
+      "multiSelected": "{{count}} elements selected",
+      "selectionCleared": "Selection cleared",
+      "deleted": "Deleted {{name}}",
+      "deletedMultiple": "Deleted {{count}} elements",
+      "editingStarted": "Editing {{name}}",
+      "editingFinished": "Finished editing {{name}}"
+    }
   }
 }

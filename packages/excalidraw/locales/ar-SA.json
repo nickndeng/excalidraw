@@ -521,5 +521,57 @@
     "description": "",
     "syntax": "",
     "preview": ""
+  },
+  "a11y": {
+    "canvas": {
+      "label": "عناصر اللوحة",
+      "description": "استخدم Tab للتنقل بين العناصر حسب ترتيب التراص، ومفاتيح الأسهم للانتقال إلى أقرب عنصر في اتجاه ما، وEnter للتحديد، وShift+Enter للإضافة إلى التحديد، وF2 لتحرير النص، وDelete للحذف، وEscape للعودة إلى اللوحة."
+    },
+    "elementType": {
+      "rectangle": "مستطيل",
+      "diamond": "معيّن",
+      "ellipse": "بيضاوي",
+      "text": "نص",
+      "line": "خط",
+      "arrow": "سهم",
+      "freedraw": "رسم حر",
+      "image": "صورة",
+      "frame": "إطار",
+      "magicframe": "إطار ذكي",
+      "embeddable": "تضمين",
+      "iframe": "تضمين",
+      "selection": "تحديد",
+      "element": "عنصر"
+    },
+    "position": {
+      "topLeft": "أعلى يسار اللوحة",
+      "top": "أعلى اللوحة",
+      "topRight": "أعلى يمين اللوحة",
+      "left": "يسار اللوحة",
+      "center": "وسط اللوحة",
+      "right": "يمين اللوحة",
+      "bottomLeft": "أسفل يسار اللوحة",
+      "bottom": "أسفل اللوحة",
+      "bottomRight": "أسفل يمين اللوحة",
+      "insideFrame": "داخل الإطار {{frame}}"
+    },
+    "state": {
+      "locked": "مقفل",
+      "editing": "قيد التحرير"
+    },
+    "name": {
+      "withText": "{{type}}: {{text}}",
+      "withPosition": "{{name}}، {{position}}",
+      "withState": "{{name}} ({{state}})"
+    },
+    "announce": {
+      "selected": "تم تحديد {{name}}",
+      "multiSelected": "تم تحديد {{count}} عناصر",
+      "selectionCleared": "تم مسح التحديد",
+      "deleted": "تم حذف {{name}}",
+      "deletedMultiple": "تم حذف {{count}} عناصر",
+      "editingStarted": "تحرير {{name}}",
+      "editingFinished": "تم الانتهاء من تحرير {{name}}"
+    }
   }
 }

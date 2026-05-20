@@ -1,0 +1,34 @@
+@import "../../css/variables.module.scss";
+
+.excalidraw {
+  // The accessibility mirror is a fully off-screen, focusable DOM tree that
+  // exposes the canvas scene to assistive technology. It must remain in the
+  // accessibility tree (aria-hidden stays false), so we clip it off-screen
+  // rather than hiding it with `display: none` / `visibility: hidden` /
+  // `opacity: 0`, none of which would expose the nodes to a screen reader.
+  .excalidraw__a11y-mirror,
+  .excalidraw__a11y-live {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    // never intercept pointer events meant for the canvas, and never show a
+    // focus ring through the canvas for sighted users
+    pointer-events: none;
+
+    // focusable descendants are kept off-screen too; any focus outline lands
+    // inside the clipped region and is therefore invisible
+    [role="option"],
+    [role="group"] {
+      outline: none;
+    }
+  }
+}
